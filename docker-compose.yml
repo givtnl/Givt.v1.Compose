@@ -1,0 +1,71 @@
+version: "3.7"
+services:
+  dashboard-one:
+    image: givt/givtdashboarddebug:latest
+    user: root
+    ports:
+      - "1000:80"
+    env_file: container.env
+  dashboard-two:
+    image: givt/givtdashboard2:pre
+    user: root
+    ports:
+      - "2000:80"
+    env_file: container.env
+  internal-dashboard:
+    image: givt/givtinternaldashboard:latest
+    user: root
+    ports:
+      - "3000:8080"
+    env_file: container.env
+  workers-validate-transactions:
+    image: givt/workers.validate-transactions-development:latest
+    user: root
+    ports:
+      - "5500:8080"
+    env_file: container.env
+    environment:
+      LogitConfiguration__Tag: "Givt.Workers.ValidateTransactions.Local"
+  workers-hmrc:
+    image: givt/workers.hmrc-development:latest
+    user: root
+    ports:
+      - "5501:8080"
+    env_file: container.env
+    environment:
+      LogitConfiguration__Tag: "Givt.Workers.Hmrc.Local"
+  workers-onboardingreminders:
+    image: givt/workers.onboardingreminders-development:latest
+    user: root
+    ports:
+      - "5502:8080"
+    env_file: container.env
+    environment:
+      LogitConfiguration__Tag: "Givt.Workers.OnboardingReminders.Local"
+  workers-servicebus:
+    image: givt/givtservicebusdbg:latest
+    user: root
+    ports:
+      - "5503:8080"
+    env_file: container.env
+    environment: 
+      LogitConfiguration__ELKLogTag: "Givt.ServiceBus.Local"
+  workers-debitusers:
+    image: givt/workers.debitusers-development:latest
+    user: root
+    ports:
+      - "5504:8080"
+    env_file: container.env
+    environment:
+      LogitConfiguration__Tag: "Givt.Workers.DebitUsers.Local"
+  api:
+    image: givt/givtapicoredbg:latest
+    user: root
+    ports:
+      - "5000:8080"
+    env_file: container.env
+    environment: 
+      LogitConfiguration__ELKLogTag: "Givt.API.Local"
+
+  
+    
