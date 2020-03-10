@@ -39,7 +39,7 @@ If you have this file you need to "source" it before starting the local test env
 
 Arango will start with its data mounted on a local directory called "arango_data".
 The root password is an empty string.
-After the inital start of arango, you need to create the local database givtdb and also add a user "operations" with password "Y`e^MaZ3:a^~}SSE&HeVch6k]{K;'ADT" which has read/write access to that database.
+After the inital start of arango, you need to create the local database givtdb and also add a user `operations` with password ``Y`e^MaZ3:a^~}SSE&HeVch6k]{K;'ADT`` which has read/write access to that database.
 
 ### Upping the test environment
 
@@ -48,6 +48,8 @@ Starting the environment is as simple as:
 
 ### After startup
 
+| Service | Url |
+|---------|-----|
 | Givt dashboard (1.0) | http://localhost:1000/ |
 | Givt dashboard (2.0) | http://localhost:2000/ |
 | Givt internal dashboard | http://localhost:3000/ |
