@@ -55,8 +55,8 @@ Starting the environment is as simple as:
 | Givt internal dashboard | http://localhost:3000/ |
 | Arango DB | http://localhost:8529/ |
 | Givt API | http://localhost:5000/ |
-| Workers.ValidateTransactions | https://localhost:5500/ |
-| Workers.Hmrc | https://localhost:5501/ |
-| Workers.OnboardingReminders | https://localhost:5502/ |
-| Workers.ServiceBus | https://localhost:5503/ |
-| Workers.DebitUsers | https://localhost:5504/ |
+| Workers.ValidateTransactions | http://localhost:5500/ |
+| Workers.Hmrc | http://localhost:5501/ |
+| Workers.OnboardingReminders | http://localhost:5502/ |
+| Workers.ServiceBus | http://localhost:5503/ |
+| Workers.DebitUsers | http://localhost:5504/ |
