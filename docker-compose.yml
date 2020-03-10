@@ -1,5 +1,13 @@
 version: "3.7"
 services:
+  arango:
+    image: arangodb:3.6.1
+    user: root
+    ports:
+      - "8529:8529"
+    entrypoint: /entrypoint.sh --server.endpoint tcp://0.0.0.0:8529 --database.directory /data
+    volumes:
+      - ./arango_data/:/data
   dashboard-one:
     image: givt/givtdashboarddebug:latest
     user: root
@@ -18,6 +26,9 @@ services:
     ports:
       - "3000:8080"
     env_file: container.env
+    environment: 
+      SQLAZURECONNSTR_GIVT_DB: ${SQLAZURECONNSTR_GIVT_DB?err}
+      APPSETTING_ARANGODB_URL: ${APPSETTING_ARANGODB_URL?err}
   workers-validate-transactions:
     image: givt/workers.validate-transactions-development:latest
     user: root
@@ -26,6 +37,9 @@ services:
     env_file: container.env
     environment:
       LogitConfiguration__Tag: "Givt.Workers.ValidateTransactions.Local"
+      ServiceBusConfiguration__ConnectionString: ${ServiceBusConfiguration__ConnectionString?err}
+      ConnectionStrings__GivtDbConnection: ${ConnectionStrings__GivtDbConnection?err} 
+      ConnectionStrings__GivtDatabaseContext: ${ConnectionStrings__GivtDatabaseContext?err} 
   workers-hmrc:
     image: givt/workers.hmrc-development:latest
     user: root
@@ -34,6 +48,9 @@ services:
     env_file: container.env
     environment:
       LogitConfiguration__Tag: "Givt.Workers.Hmrc.Local"
+      ServiceBusConfiguration__ConnectionString: ${ServiceBusConfiguration__ConnectionString?err}
+      ConnectionStrings__GivtDbConnection: ${ConnectionStrings__GivtDbConnection?err} 
+      ConnectionStrings__GivtDatabaseContext: ${ConnectionStrings__GivtDatabaseContext?err} 
   workers-onboardingreminders:
     image: givt/workers.onboardingreminders-development:latest
     user: root
@@ -42,6 +59,9 @@ services:
     env_file: container.env
     environment:
       LogitConfiguration__Tag: "Givt.Workers.OnboardingReminders.Local"
+      ServiceBusConfiguration__ConnectionString: ${ServiceBusConfiguration__ConnectionString?err}
+      ConnectionStrings__GivtDbConnection: ${ConnectionStrings__GivtDbConnection?err} 
+      ConnectionStrings__GivtDatabaseContext: ${ConnectionStrings__GivtDatabaseContext?err} 
   workers-servicebus:
     image: givt/givtservicebusdbg:latest
     user: root
@@ -50,6 +70,10 @@ services:
     env_file: container.env
     environment: 
       LogitConfiguration__ELKLogTag: "Givt.ServiceBus.Local"
+      ConnectionStrings__AzureWebJobsServiceBus: ${ConnectionStrings__AzureWebJobsServiceBus?err}
+      ConnectionStrings__GivtDbConnection: ${ConnectionStrings__GivtDbConnection?err} 
+      ConnectionStrings__GivtDatabaseContext: ${ConnectionStrings__GivtDatabaseContext?err} 
+      ArangoDBConfiguration__Url: ${ArangoDBConfiguration__Url?err} 
   workers-debitusers:
     image: givt/workers.debitusers-development:latest
     user: root
@@ -58,6 +82,9 @@ services:
     env_file: container.env
     environment:
       LogitConfiguration__Tag: "Givt.Workers.DebitUsers.Local"
+      ServiceBusConfiguration__ConnectionString: ${ServiceBusConfiguration__ConnectionString?err}
+      ConnectionStrings__GivtDbConnection: ${ConnectionStrings__GivtDbConnection?err} 
+      ConnectionStrings__GivtDatabaseContext: ${ConnectionStrings__GivtDatabaseContext?err} 
   api:
     image: givt/givtapicoredbg:latest
     user: root
@@ -66,6 +93,9 @@ services:
     env_file: container.env
     environment: 
       LogitConfiguration__ELKLogTag: "Givt.API.Local"
+      ConnectionStrings__AzureWebJobsServiceBus: ${ConnectionStrings__AzureWebJobsServiceBus?err}
+      ConnectionStrings__GivtDbConnection: ${ConnectionStrings__GivtDbConnection?err} 
+      ConnectionStrings__GivtDatabaseContext: ${ConnectionStrings__GivtDatabaseContext?err}
+      ArangoDBConfiguration__Url: ${ArangoDBConfiguration__Url?err} 
 
-  
     
