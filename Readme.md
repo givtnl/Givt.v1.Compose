@@ -24,7 +24,7 @@ f.i.
 ```bash
 export ServiceBusConfiguration__ConnectionString="Endpoint=sb://mvgtest.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=/aCAwM3kL5ezhz52wKZNCNlmg4/YV1ui2AVclFNx8co="
 export ConnectionStrings__GivtDbConnection="Server=tcp:givtdbdebug.database.windows.net,1433;Initial Catalog=GivtDbDebug;Persist Security Info=False;User ID=dbadmin;Password=DB4dmin0;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
-export ArangoDBConfiguration__Url="http://localhost:8529/"
+export ArangoDBConfiguration__Url="http://arango:8529/"
 
 export ConnectionStrings__AzureWebJobsServiceBus="${ServiceBusConfiguration__ConnectionString}"
 export ConnectionStrings__GivtDatabaseContext="${ConnectionStrings__GivtDbConnection}"
@@ -53,7 +53,7 @@ Starting the environment is as simple as:
 | Givt dashboard (1.0) | http://localhost:1000/ |
 | Givt dashboard (2.0) | http://localhost:2000/ |
 | Givt internal dashboard | http://localhost:3000/ |
-| Arango DB | http://localhost:8529/ |
+| Arango DB | http://arango:8529/ |
 | Givt API | http://localhost:5000/ |
 | Workers.ValidateTransactions | http://localhost:5500/ |
 | Workers.Hmrc | http://localhost:5501/ |
