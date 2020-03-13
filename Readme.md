@@ -20,7 +20,7 @@ Your environment needs to define a few mandatory variables. These are:
 * APPSETTING_ARANGODB_URL
 * APPSETTING_API_URL
 
-The easiest way of doing is, is to provide a local file called container.env.local in which you export those variables.\
+The easiest way of doing is, is to provide a local file called container.env.local in which you export those variables.  
 f.i.
 
 ```bash
@@ -36,7 +36,7 @@ export APPSETTING_ARANGODB_URL="${ArangoDBConfiguration__Url}"
 export APPSETTING_API_URL="${GivtConfiguration__GivtApi}"
 ```
 
-If you have this file you need to "source" it before starting the local test environment.\
+If you have this file you need to "source" it before starting the local test environment.  
 `source ./container.env.local`
 
 N.B. To access other containers from a container you need to address it with service name e.g. "arango".
