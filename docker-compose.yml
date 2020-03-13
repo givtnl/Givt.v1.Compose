@@ -27,10 +27,13 @@ services:
     user: root
     ports:
       - "3000:8080"
+      - "2223:2222"
     env_file: container.env
     environment: 
       SQLAZURECONNSTR_GIVT_DB: ${SQLAZURECONNSTR_GIVT_DB?err}
       APPSETTING_ARANGODB_URL: ${APPSETTING_ARANGODB_URL?err}
+      APPSETTING_API_URL: ${APPSETTING_API_URL?err}
+      CUSTOMCONNSTR_API_TOKEN: ${CUSTOMCONNSTR_API_TOKEN}
   workers-validate-transactions:
     image: givt/workers.validate-transactions-development:latest
     user: root
@@ -76,6 +79,7 @@ services:
       ConnectionStrings__GivtDbConnection: ${ConnectionStrings__GivtDbConnection?err} 
       ConnectionStrings__GivtDatabaseContext: ${ConnectionStrings__GivtDatabaseContext?err} 
       ArangoDBConfiguration__Url: ${ArangoDBConfiguration__Url?err} 
+      GivtConfiguration__GivtApi: ${GivtConfiguration__GivtApi?err}
   workers-debitusers:
     image: givt/workers.debitusers-development:latest
     user: root
@@ -92,12 +96,14 @@ services:
     user: root
     ports:
       - "5000:8080"
+      - "2222:2222"
     env_file: container.env
     environment: 
       LogitConfiguration__ELKLogTag: "Givt.API.Local"
       ConnectionStrings__AzureWebJobsServiceBus: ${ConnectionStrings__AzureWebJobsServiceBus?err}
       ConnectionStrings__GivtDbConnection: ${ConnectionStrings__GivtDbConnection?err} 
       ConnectionStrings__GivtDatabaseContext: ${ConnectionStrings__GivtDatabaseContext?err}
-      ArangoDBConfiguration__Url: ${ArangoDBConfiguration__Url?err} 
+      ArangoDBConfiguration__Url: ${ArangoDBConfiguration__Url?err}
+      GivtConfiguration__GivtApi: ${GivtConfiguration__GivtApi?err}
 
     
