@@ -15,25 +15,31 @@ Your environment needs to define a few mandatory variables. These are:
 * ArangoDBConfiguration__Url
 * ConnectionStrings__AzureWebJobsServiceBus
 * ConnectionStrings__GivtDatabaseContext
+* GivtConfiguration__GivtApi
 * SQLAZURECONNSTR_GIVT_DB
 * APPSETTING_ARANGODB_URL
+* APPSETTING_API_URL
 
-The easiest way of doing is, is to provide a local file called container.env.local in which you export those variables.
+The easiest way of doing is, is to provide a local file called container.env.local in which you export those variables.\
 f.i.
 
 ```bash
 export ServiceBusConfiguration__ConnectionString="Endpoint=sb://mvgtest.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=/aCAwM3kL5ezhz52wKZNCNlmg4/YV1ui2AVclFNx8co="
-export ConnectionStrings__GivtDbConnection="Server=tcp:givtdbdebug.database.windows.net,1433;Initial Catalog=GivtDbDebug;Persist Security Info=False;User ID=dbadmin;Password=DB4dmin0;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
+export ConnectionStrings__GivtDbConnection="Server=tcp:host.docker.internal,1433;Initial Catalog=localgivt;User ID=dbadmin;Password=DB4dmin0;Encrypt=False;Connection Timeout=30;"
 export ArangoDBConfiguration__Url="http://arango:8529/"
+export GivtConfiguration__GivtApi="http://api:8080"
 
 export ConnectionStrings__AzureWebJobsServiceBus="${ServiceBusConfiguration__ConnectionString}"
 export ConnectionStrings__GivtDatabaseContext="${ConnectionStrings__GivtDbConnection}"
 export SQLAZURECONNSTR_GIVT_DB="${ConnectionStrings__GivtDbConnection}"
 export APPSETTING_ARANGODB_URL="${ArangoDBConfiguration__Url}"
+export APPSETTING_API_URL="${GivtConfiguration__GivtApi}"
 ```
 
-If you have this file you need to "source" it before starting the local test environment.
+If you have this file you need to "source" it before starting the local test environment.\
 `source ./container.env.local`
+
+N.B. To access other containers from a container you need to address it with service name e.g. "arango".
 
 ### Some words on the Arango database Server
 
@@ -43,7 +49,7 @@ After the inital start of arango, you need to create the local database givtdbg 
 
 ### Upping the test environment
 
-Starting the environment is as simple as:
+Starting the environment is as simple as:\
 `source ./container.env.local && docker-compose up`
 
 ### After startup
