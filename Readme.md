@@ -68,7 +68,7 @@ After the inital start of arango, you need to create the local database givtdbg 
 
 ### Upping the test environment
 
-Starting the environment is as simple as:\
+Starting the environment is as simple as:  
 `source ./container.env.local && docker-compose up`
 
 ### After startup
