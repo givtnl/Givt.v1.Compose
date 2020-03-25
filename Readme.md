@@ -20,6 +20,9 @@ Your environment needs to define a few mandatory variables. These are:
 * APPSETTING_ARANGODB_URL
 * APPSETTING_API_URL
 
+N.B. To access other containers from a container you need to address it with service name e.g. "arango".
+
+#### Mac OS/Linux
 The easiest way of doing is, is to provide a local file called container.env.local in which you export those variables.  
 f.i.
 
@@ -40,7 +43,22 @@ export APPSETTING_API_URL="${GivtConfiguration__GivtApi}"
 If you have this file you need to "source" it before starting the local test environment.  
 `source ./container.env.local`
 
-N.B. To access other containers from a container you need to address it with service name e.g. "arango".
+#### Windows 
+The easiest way of doing this is to create a batch file (start.docker.compose.bat) that you run. This batch file will set the environment variables and execute docker-compose up  
+f.i.  
+  
+```batch
+set ServiceBusConfiguration__ConnectionString="Endpoint=sb://givttest5.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=4jJe/328CNSkthbZiKeVzNK1iy1MtnXdg6D4buy8zE4="
+set ConnectionStrings__GivtDbConnection="Data Source=host.docker.internal,1433;Initial Catalog=givtdbg;Integrated Security=true;"
+set ArangoDBConfiguration__Url="http://arango:8529/"
+set GivtConfiguration__GivtApi="http://api:8080"
+set ConnectionStrings__AzureWebJobsServiceBus=%ServiceBusConfiguration__ConnectionString%
+set ConnectionStrings__GivtDatabaseContext=%ConnectionStrings__GivtDbConnection%
+set SQLAZURECONNSTR_GIVT_DB=%ConnectionStrings__GivtDbConnection%
+set APPSETTING_ARANGODB_URL=%ArangoDBConfiguration__Url%
+set APPSETTING_API_URL=%GivtConfiguration__GivtApi%
+docker-compose up
+```
 
 ### Some words on the Arango database Server
 
