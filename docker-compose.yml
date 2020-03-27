@@ -105,5 +105,12 @@ services:
       ConnectionStrings__GivtDatabaseContext: ${ConnectionStrings__GivtDatabaseContext?err}
       ArangoDBConfiguration__Url: ${ArangoDBConfiguration__Url?err}
       GivtConfiguration__GivtApi: ${GivtConfiguration__GivtApi?err}
-
-    
+  transactions-dashboard:
+    image: givt/givt.dashboard.transactions
+    user: root
+    ports:
+      - "5505:5000"
+    env_file: container.env
+    environment:
+      ConnectionStrings__GivtDbConnection: ${ConnectionStrings__GivtDbConnection?err} 
+      ConnectionStrings__AzureWebJobsServiceBus: ${ConnectionStrings__AzureWebJobsServiceBus?err}    
