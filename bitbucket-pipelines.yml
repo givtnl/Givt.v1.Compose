@@ -9,12 +9,21 @@ image: atlassian/default-image:2
 pipelines:
     branches:
         master:
-            - step:
-                name: Build Nginx Image
-                services:
-                    - docker
-                script: 
-                    - cd azure-nginx-image
-                    - docker login -u ${APPSETTING_DOCKER_USERNAME} -p ${APPSETTING_DOCKER_PASSWORD}
-                    - docker build . -t givt/base-nginx-image
-                    - docker push givt/base-nginx-image
+          - parallel:
+                - step:
+                    name: Build Nginx Image
+                    services:
+                        - docker
+                    script: 
+                        - cd azure-nginx-image
+                        - docker login -u ${APPSETTING_DOCKER_USERNAME} -p ${APPSETTING_DOCKER_PASSWORD}
+                        - docker build . -t givt/base-nginx-image
+                        - docker push givt/base-nginx-image
+                -step:
+                    name: Build Dotnet Image
+                    services:
+                        - docker
+                        - cd azure-nginx-image
+                        - docker login -u ${APPSETTING_DOCKER_USERNAME} -p ${APPSETTING_DOCKER_PASSWORD}
+                        - docker build . -t givt/base-nginx-image
+                        - docker push givt/base-nginx-image
