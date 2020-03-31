@@ -1,2 +1,3 @@
 arango_data/*
 container.env.local
+start.docker.compose.bat
