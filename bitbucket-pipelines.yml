@@ -23,6 +23,7 @@ pipelines:
                     name: Build Dotnet Image
                     services:
                         - docker
+                    script:
                         - cd azure-dotnet-image
                         - docker login -u ${APPSETTING_DOCKER_USERNAME} -p ${APPSETTING_DOCKER_PASSWORD}
                         - docker build . -t givt/base-dotnet-image
