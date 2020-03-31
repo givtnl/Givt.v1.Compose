@@ -1,0 +1,20 @@
+# This is a sample build configuration for .NET Core.
+# Check our guides at https://confluence.atlassian.com/x/5Q4SMw for more examples.
+# Only use spaces to indent your .yml configuration.
+# -----
+# You can specify a custom docker image from Docker Hub as your build environment
+#default-image:2 = ubuntu 16.4
+image: atlassian/default-image:2
+
+pipelines:
+    branches:
+        master:
+            - step:
+                name: Build Nginx Image
+                services:
+                    - docker
+                script: 
+                    - cd azure-nginx-image
+                    - docker login -u ${APPSETTING_DOCKER_USERNAME} -p ${APPSETTING_DOCKER_PASSWORD}
+                    - docker build . -t givt/base-nginx-image
+                    - docker push givt/base-nginx-image
