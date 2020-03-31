@@ -19,11 +19,11 @@ pipelines:
                         - docker login -u ${APPSETTING_DOCKER_USERNAME} -p ${APPSETTING_DOCKER_PASSWORD}
                         - docker build . -t givt/base-nginx-image
                         - docker push givt/base-nginx-image
-                -step:
+                - step:
                     name: Build Dotnet Image
                     services:
                         - docker
-                        - cd azure-nginx-image
+                        - cd azure-dotnet-image
                         - docker login -u ${APPSETTING_DOCKER_USERNAME} -p ${APPSETTING_DOCKER_PASSWORD}
-                        - docker build . -t givt/base-nginx-image
-                        - docker push givt/base-nginx-image
+                        - docker build . -t givt/base-dotnet-image
+                        - docker push givt/base-dotnet-image
