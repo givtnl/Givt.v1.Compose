@@ -1,3 +1,4 @@
 arango_data/*
 container.env.local
 start.docker.compose.bat
+azure-nodejs-image/default-website/node_modules/

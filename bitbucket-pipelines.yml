@@ -28,3 +28,12 @@ pipelines:
                         - docker login -u ${APPSETTING_DOCKER_USERNAME} -p ${APPSETTING_DOCKER_PASSWORD}
                         - docker build . -t givt/base-dotnet-image
                         - docker push givt/base-dotnet-image
+                - step:
+                    name: Build NodeJs Image
+                    services:
+                        - docker
+                    script:
+                        - cd azure-nodejs-image
+                        - docker login -u ${APPSETTING_DOCKER_USERNAME} -p ${APPSETTING_DOCKER_PASSWORD}
+                        - docker build . -t givt/base-nodejs-image
+                        - docker push givt/base-nodejs-image
