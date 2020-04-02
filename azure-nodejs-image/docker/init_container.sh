@@ -3,12 +3,15 @@
 # Get environment variables to show up in SSH session
 eval $(printenv | awk -F= '{print "export " $1"="$2 }' >> /etc/profile)
 
-# Ensure this happens after /sbin/init
-# why sleep 5 and in dotnet image 8 ?
-( sleep 5 ; /etc/init.d/sshd restart ) &
+# Starting nginx
+mkdir -p /home/LogFiles/nginx
+# this line is required or else it will error a while when running ze container
+if test ! -e /home/LogFiles/nginx/error.log; then 
+    touch /home/LogFiles/nginx/error.log
+fi
 
-# start the default sait
-exec node /home/site/wwwroot/default-static-site.js
+#start ssh service
+/usr/sbin/sshd
 
 #disable the can't open /dev/tty1: No such file or directory spam sausages
 ln -sf /dev/null /dev/tty1
@@ -18,5 +21,7 @@ ln -sf /dev/null /dev/tty4
 ln -sf /dev/null /dev/tty5
 ln -sf /dev/null /dev/tty6
 
-# Needs to start as PID 1 for openrc on alpine
-exec -c /sbin/init 
+cd /home/site/wwwroot
+[ -e "package.json" ] && exec npm start
+
+exec node default-website/default-static-site.js
