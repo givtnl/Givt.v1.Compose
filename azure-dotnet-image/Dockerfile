@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
+FROM mcr.microsoft.com/dotnet/aspnet:5.0
 
 COPY docker/init_container.sh /bin/
 COPY docker/sshd_config /etc/ssh/
