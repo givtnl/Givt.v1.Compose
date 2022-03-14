@@ -20,6 +20,15 @@ pipelines:
                         - docker build . -t givt/base-nginx-image
                         - docker push givt/base-nginx-image
                 - step:
+                    name: Build Nginx Image for internationalized Angular app
+                    services:
+                        - docker
+                    script: 
+                        - cd azure-nginx-image-angular
+                        - docker login -u ${APPSETTING_DOCKER_USERNAME} -p ${APPSETTING_DOCKER_PASSWORD}
+                        - docker build . -t givt/angular-internationalized-nginx-image
+                        - docker push givt/angular-internationalized-nginx-image
+                - step:
                     name: Build Dotnet Image
                     services:
                         - docker
