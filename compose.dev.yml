@@ -1,0 +1,131 @@
+version: '3.7'
+services:
+  sql_db:
+    container_name: db-sql
+    image: mcr.microsoft.com/mssql/server:2017-latest
+    environment:
+      - MSSQL_SA_PASSWORD=Db4dmin0
+      - ACCEPT_EULA=Y
+    ports:
+      - "1433:1433"
+    volumes:
+      - db_data_mssql:/var/opt/mssql
+      - db_data_sqlserver:/var/opt/sqlserver
+
+  arango_db:
+    container_name: db-arango
+    image: arangodb:3.6.1
+    ports:
+      - "8529:8529"
+    entrypoint: /entrypoint.sh --server.endpoint tcp://0.0.0.0:8529 --database.directory /data
+    volumes:
+      - arango_data:/data
+    environment:
+      ARANGO_ROOT_PASSWORD: ""
+
+  dashboard-one:
+    container_name: frontend-dashboard-one
+    depends_on: 
+      - api
+    image: givt/givtdashboarddebug:latest
+    ports:
+      - "1000:80"
+
+  dashboard-two:
+    container_name: frontend-dashboard-two
+    depends_on: 
+      - api
+    image: givt/givtdashboard2:pre
+    ports:
+      - "2000:80"
+
+  flash-control:
+    container_name: frontend-flash-control
+    depends_on: 
+      - api
+    image: givt/givtcontrol:latest
+    ports:
+      - "3000:80"
+
+  flash-crowd:
+    container_name: frontend-flash-crowd
+    depends_on: 
+      - api
+    image: givt/crowdgivt:latest
+    ports:
+      - "4000:80"
+
+  api:
+    container_name: backend-api
+    depends_on:
+      - sql_db
+      - arango_db
+    image: givt/givtapicoredbg
+    environment:
+      - DOTNET_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Development
+      - LogitConfiguration__Tag=Givt.API.Local
+      - ConnectionStrings__AzureAppConfig=Endpoint=https://givt-debug-app-config.azconfig.io;Id=GCv1-l9-s0:72C0wCDYMNZTS5mNlhcn;Secret=aMWM+4IeGL4IMjX5nyXKKh31/6OJ9h/4JrGqgvYabXU=
+      #- ConnectionStrings__GivtDbConnection=Server=sql_db;Initial Catalog=GivtDbDebug;Persist Security Info=False;User ID=SA;Password=Db4dmin0;Connection Timeout=30;
+      #- ConnectionStrings__GivtDatabaseContext=Server=sql_db;Initial Catalog=GivtDbDebug;Persist Security Info=False;User ID=SA;Password=Db4dmin0;Connection Timeout=30;
+    ports:
+      - "5000:8080" 
+  
+  workers-hmrc:
+    container_name: backend-workers-1-hmrc
+    image: givt/workers.hmrc-development:latest
+    ports:
+      - "5501:8080"
+    environment:
+      - LogitConfiguration__Tag=Givt.Workers.Hmrc.Local
+      - ConnectionStrings__AzureAppConfig=Endpoint=https://givt-debug-app-config.azconfig.io;Id=GCv1-l9-s0:72C0wCDYMNZTS5mNlhcn;Secret=aMWM+4IeGL4IMjX5nyXKKh31/6OJ9h/4JrGqgvYabXU=      
+
+  workers-onboardingreminders:
+    container_name: backend-workers-2-onboarding-reminders
+    image: givt/workers.onboardingreminders-development:latest
+    ports:
+      - "5502:8080"
+    environment:
+      - LogitConfiguration__Tag=Givt.Workers.OnboardingReminders.Local
+      - ConnectionStrings__AzureAppConfig=Endpoint=https://givt-debug-app-config.azconfig.io;Id=GCv1-l9-s0:72C0wCDYMNZTS5mNlhcn;Secret=aMWM+4IeGL4IMjX5nyXKKh31/6OJ9h/4JrGqgvYabXU=
+
+  workers-debitusers:
+    container_name: backend-workers-3-debit-users
+    image: givt/workers.debitusers-development:latest
+    user: root
+    ports:
+      - "5503:8080"
+    environment:
+      - LogitConfiguration__Tag=Givt.Workers.DebitUsers.Local
+      - ConnectionStrings__AzureAppConfig=Endpoint=https://givt-debug-app-config.azconfig.io;Id=GCv1-l9-s0:72C0wCDYMNZTS5mNlhcn;Secret=aMWM+4IeGL4IMjX5nyXKKh31/6OJ9h/4JrGqgvYabXU=
+
+  workers-validate-transactions:
+    container_name: backend-workers-4-validate-transactions
+    image: givt/workers.validate-transactions-development:latest
+    ports:
+      - "5504:8080"
+    environment:
+      - LogitConfiguration__Tag=Givt.Workers.ValidateTransactions.Local
+      - ConnectionStrings__AzureAppConfig=Endpoint=https://givt-debug-app-config.azconfig.io;Id=GCv1-l9-s0:72C0wCDYMNZTS5mNlhcn;Secret=aMWM+4IeGL4IMjX5nyXKKh31/6OJ9h/4JrGqgvYabXU=
+
+  servicebus:
+    container_name: backend-servicebus
+    image: givt/givtservicebusdbg:latest
+    ports:
+      - "5500:8080"
+    environment: 
+      - LogitConfiguration__ELKLogTag=Givt.ServiceBus.Local
+      - ConnectionStrings__AzureAppConfig=Endpoint=https://givt-debug-app-config.azconfig.io;Id=GCv1-l9-s0:72C0wCDYMNZTS5mNlhcn;Secret=aMWM+4IeGL4IMjX5nyXKKh31/6OJ9h/4JrGqgvYabXU=
+  
+  transactions-dashboard:
+    container_name: frontend-dashboard-transactions
+    image: givt/givt.dashboard.transactions
+    ports:
+      - "6000:5000"
+    environment:
+      - ConnectionStrings__AzureAppConfig=Endpoint=https://givt-debug-app-config.azconfig.io;Id=GCv1-l9-s0:72C0wCDYMNZTS5mNlhcn;Secret=aMWM+4IeGL4IMjX5nyXKKh31/6OJ9h/4JrGqgvYabXU=
+
+volumes:
+  db_data_mssql:
+  db_data_sqlserver:
+  arango_data:
