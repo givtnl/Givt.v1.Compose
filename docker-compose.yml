@@ -77,6 +77,8 @@ services:
     ports:
       - "5501:8080"
     environment:
+      - DOTNET_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Development
       - LogitConfiguration__Tag=Givt.Workers.Hmrc.Local
       - ConnectionStrings__AzureAppConfig=Endpoint=https://givt-debug-app-config.azconfig.io;Id=GCv1-l9-s0:72C0wCDYMNZTS5mNlhcn;Secret=aMWM+4IeGL4IMjX5nyXKKh31/6OJ9h/4JrGqgvYabXU=      
 
@@ -86,6 +88,8 @@ services:
     ports:
       - "5502:8080"
     environment:
+      - DOTNET_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Development
       - LogitConfiguration__Tag=Givt.Workers.OnboardingReminders.Local
       - ConnectionStrings__AzureAppConfig=Endpoint=https://givt-debug-app-config.azconfig.io;Id=GCv1-l9-s0:72C0wCDYMNZTS5mNlhcn;Secret=aMWM+4IeGL4IMjX5nyXKKh31/6OJ9h/4JrGqgvYabXU=
 
@@ -96,6 +100,8 @@ services:
     ports:
       - "5503:8080"
     environment:
+      - DOTNET_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Development
       - LogitConfiguration__Tag=Givt.Workers.DebitUsers.Local
       - ConnectionStrings__AzureAppConfig=Endpoint=https://givt-debug-app-config.azconfig.io;Id=GCv1-l9-s0:72C0wCDYMNZTS5mNlhcn;Secret=aMWM+4IeGL4IMjX5nyXKKh31/6OJ9h/4JrGqgvYabXU=
 
@@ -105,6 +111,8 @@ services:
     ports:
       - "5504:8080"
     environment:
+      - DOTNET_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Development
       - LogitConfiguration__Tag=Givt.Workers.ValidateTransactions.Local
       - ConnectionStrings__AzureAppConfig=Endpoint=https://givt-debug-app-config.azconfig.io;Id=GCv1-l9-s0:72C0wCDYMNZTS5mNlhcn;Secret=aMWM+4IeGL4IMjX5nyXKKh31/6OJ9h/4JrGqgvYabXU=
 
@@ -114,6 +122,8 @@ services:
     ports:
       - "5500:8080"
     environment: 
+      - DOTNET_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Development
       - LogitConfiguration__ELKLogTag=Givt.ServiceBus.Local
       - ConnectionStrings__AzureAppConfig=Endpoint=https://givt-debug-app-config.azconfig.io;Id=GCv1-l9-s0:72C0wCDYMNZTS5mNlhcn;Secret=aMWM+4IeGL4IMjX5nyXKKh31/6OJ9h/4JrGqgvYabXU=
   
@@ -123,6 +133,8 @@ services:
     ports:
       - "6000:5000"
     environment:
+      - DOTNET_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__AzureAppConfig=Endpoint=https://givt-debug-app-config.azconfig.io;Id=GCv1-l9-s0:72C0wCDYMNZTS5mNlhcn;Secret=aMWM+4IeGL4IMjX5nyXKKh31/6OJ9h/4JrGqgvYabXU=
 
 volumes:
