@@ -66,8 +66,9 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - LogitConfiguration__Tag=Givt.API.Local
       - ConnectionStrings__AzureAppConfig=Endpoint=https://givt-debug-app-config.azconfig.io;Id=GCv1-l9-s0:72C0wCDYMNZTS5mNlhcn;Secret=aMWM+4IeGL4IMjX5nyXKKh31/6OJ9h/4JrGqgvYabXU=
-      #- ConnectionStrings__GivtDbConnection=Server=sql_db;Initial Catalog=GivtDbDebug;Persist Security Info=False;User ID=SA;Password=Db4dmin0;Connection Timeout=30;
-      #- ConnectionStrings__GivtDatabaseContext=Server=sql_db;Initial Catalog=GivtDbDebug;Persist Security Info=False;User ID=SA;Password=Db4dmin0;Connection Timeout=30;
+      - ConnectionStrings__GivtDbConnection=Server=sql_db;Initial Catalog=GivtDbDebug;Persist Security Info=False;User ID=SA;Password=Db4dmin0;Connection Timeout=30;
+      - ServiceBusConfiguration__ConnectionString=Endpoint=sb://givttest.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=4uv+G6p+B2fxdzQBbDYui9hjJdZxLdF4qVtdtmt3PrU=
+
     ports:
       - "5000:8080" 
   
@@ -80,8 +81,10 @@ services:
       - DOTNET_ENVIRONMENT=Development
       - ASPNETCORE_ENVIRONMENT=Development
       - LogitConfiguration__Tag=Givt.Workers.Hmrc.Local
-      - ConnectionStrings__AzureAppConfig=Endpoint=https://givt-debug-app-config.azconfig.io;Id=GCv1-l9-s0:72C0wCDYMNZTS5mNlhcn;Secret=aMWM+4IeGL4IMjX5nyXKKh31/6OJ9h/4JrGqgvYabXU=      
-
+      - ConnectionStrings__AzureAppConfig=Endpoint=https://givt-debug-app-config.azconfig.io;Id=GCv1-l9-s0:72C0wCDYMNZTS5mNlhcn;Secret=aMWM+4IeGL4IMjX5nyXKKh31/6OJ9h/4JrGqgvYabXU=
+      - ConnectionStrings__GivtDatabaseContext=Server=sql_db;Initial Catalog=GivtDbDebug;Persist Security Info=False;User ID=SA;Password=Db4dmin0;Connection Timeout=30;      
+      - ServiceBusConfiguration__ConnectionString=Endpoint=sb://givttest.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=4uv+G6p+B2fxdzQBbDYui9hjJdZxLdF4qVtdtmt3PrU=
+ 
   workers-onboardingreminders:
     container_name: backend-workers-2-onboarding-reminders
     image: givt/workers.onboardingreminders-development:latest
@@ -92,7 +95,9 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - LogitConfiguration__Tag=Givt.Workers.OnboardingReminders.Local
       - ConnectionStrings__AzureAppConfig=Endpoint=https://givt-debug-app-config.azconfig.io;Id=GCv1-l9-s0:72C0wCDYMNZTS5mNlhcn;Secret=aMWM+4IeGL4IMjX5nyXKKh31/6OJ9h/4JrGqgvYabXU=
-
+      - ConnectionStrings__GivtDatabaseContext=Server=sql_db;Initial Catalog=GivtDbDebug;Persist Security Info=False;User ID=SA;Password=Db4dmin0;Connection Timeout=30;      
+      - ServiceBusConfiguration__ConnectionString=Endpoint=sb://givttest.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=4uv+G6p+B2fxdzQBbDYui9hjJdZxLdF4qVtdtmt3PrU=
+ 
   workers-debitusers:
     container_name: backend-workers-3-debit-users
     image: givt/workers.debitusers-development:latest
@@ -104,7 +109,9 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - LogitConfiguration__Tag=Givt.Workers.DebitUsers.Local
       - ConnectionStrings__AzureAppConfig=Endpoint=https://givt-debug-app-config.azconfig.io;Id=GCv1-l9-s0:72C0wCDYMNZTS5mNlhcn;Secret=aMWM+4IeGL4IMjX5nyXKKh31/6OJ9h/4JrGqgvYabXU=
-
+      - ConnectionStrings__GivtDatabaseContext=Server=sql_db;Initial Catalog=GivtDbDebug;Persist Security Info=False;User ID=SA;Password=Db4dmin0;Connection Timeout=30;      
+      - ServiceBusConfiguration__ConnectionString=Endpoint=sb://givttest.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=4uv+G6p+B2fxdzQBbDYui9hjJdZxLdF4qVtdtmt3PrU=
+ 
   workers-validate-transactions:
     container_name: backend-workers-4-validate-transactions
     image: givt/workers.validate-transactions-development:latest
@@ -115,8 +122,10 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - LogitConfiguration__Tag=Givt.Workers.ValidateTransactions.Local
       - ConnectionStrings__AzureAppConfig=Endpoint=https://givt-debug-app-config.azconfig.io;Id=GCv1-l9-s0:72C0wCDYMNZTS5mNlhcn;Secret=aMWM+4IeGL4IMjX5nyXKKh31/6OJ9h/4JrGqgvYabXU=
-
-  servicebus:
+      - ConnectionStrings__GivtDatabaseContext=Server=sql_db;Initial Catalog=GivtDbDebug;Persist Security Info=False;User ID=SA;Password=Db4dmin0;Connection Timeout=30;      
+      - ServiceBusConfiguration__ConnectionString=Endpoint=sb://givttest.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=4uv+G6p+B2fxdzQBbDYui9hjJdZxLdF4qVtdtmt3PrU=
+  
+  workers-servicebus:
     container_name: backend-servicebus
     image: givt/givtservicebusdbg:latest
     ports:
@@ -126,7 +135,9 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - LogitConfiguration__ELKLogTag=Givt.ServiceBus.Local
       - ConnectionStrings__AzureAppConfig=Endpoint=https://givt-debug-app-config.azconfig.io;Id=GCv1-l9-s0:72C0wCDYMNZTS5mNlhcn;Secret=aMWM+4IeGL4IMjX5nyXKKh31/6OJ9h/4JrGqgvYabXU=
-  
+      - ConnectionStrings__GivtDbConnection=Server=sql_db;Initial Catalog=GivtDbDebug;Persist Security Info=False;User ID=SA;Password=Db4dmin0;Connection Timeout=30;
+      - ServiceBusConfiguration__ConnectionString=Endpoint=sb://givttest.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=4uv+G6p+B2fxdzQBbDYui9hjJdZxLdF4qVtdtmt3PrU=
+
   transactions-dashboard:
     container_name: frontend-dashboard-transactions
     image: givt/givt.dashboard.transactions
